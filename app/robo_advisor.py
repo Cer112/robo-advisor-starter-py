@@ -7,7 +7,7 @@ load_dotenv() # loads environment variables set in a ".env" file, including the 
 
 # see: https://www.alphavantage.co/support/#api-key
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
-print("API KEY: " + api_key) # TODO: remove or comment-out this line after you have verified the environment variable is getting read properly
+#print("API KEY: " + api_key) # TODO: remove or comment-out this line after you have verified the environment variable is getting read properly
 
 symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stock symbol: ")
 
@@ -25,9 +25,29 @@ latest_price_usd = "$100,000.00"
 # INFO OUTPUTS
 #
 
+import requests
+
+request_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apik"
+
+response = requests.get("request_url")
+print(type(response))
+print(response.status_code)
+print(response.text)
+
+
+
+quit()
+
+
+
+
+
+
+
 # TODO: write response data to a CSV file
 
 # TODO: further revise the example outputs below to reflect real information
+
 print("-----------------")
 print(f"STOCK SYMBOL: {symbol}")
 print("RUN AT: 11:52pm on June 5th, 2018")
