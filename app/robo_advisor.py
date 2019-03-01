@@ -68,24 +68,17 @@ csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 with open(csv_file_path, "w") as csv_file:
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader()
-
-    #loop through to write each row
-    writer.writerow({
-        "timestamp": "TODO",
-        "open": "TODO",
-        "high": "TODO",
-        "low": "TODO",
-        "close": "TODO",
-        "volume": "TODO"
-    })
-      writer.writerow({
-        "timestamp": "TODO",
-        "open": "TODO",
-        "high": "TODO",
-        "low": "TODO",
-        "close": "TODO",
-        "volume": "TODO"
-    })
+    for date in dates:
+        daily_prices = TSD[date]
+        writer.writerow({
+            "timestamp": date,
+            "open": daily_prices["1. open"],
+            "high": daily_prices["1. open"],
+            "low": daily_prices["1. open"],
+            "close": daily_prices["1. open"],
+            "volume": daily_prices["1. open"],
+        })
+        
 
 
 print("-----------------")
