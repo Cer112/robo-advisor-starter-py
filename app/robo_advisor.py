@@ -15,7 +15,8 @@ load_dotenv() # loads environment variables set in a ".env" file, including the 
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 #print("API KEY: " + api_key) # TODO: remove or comment-out this line after you have verified the environment variable is getting read properly
 
-symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stock symbol: ")
+user_input = ("Please type a stock symbol: ")
+symbol = user_input
 
 #
 # INFO OUTPUTS
@@ -56,9 +57,6 @@ latest_low = min(low_prices)
 
 
 
-
-# TODO: further revise the example outputs below to reflect real information
-
 #csv_file_path = "prices.csv"
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 
@@ -73,17 +71,17 @@ with open(csv_file_path, "w") as csv_file:
         writer.writerow({
             "timestamp": date,
             "open": daily_prices["1. open"],
-            "high": daily_prices["1. open"],
-            "low": daily_prices["1. open"],
-            "close": daily_prices["1. open"],
-            "volume": daily_prices["1. open"],
+            "high": daily_prices["2. high"],
+            "low": daily_prices["3. low"],
+            "close": daily_prices["4. close"],
+            "volume": daily_prices["5. volume"]
         })
         
-
+current_time = datetime.datetime.strptime(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"),"%Y-%m-%d %H:%M:%S")
 
 print("-----------------")
 print(f"STOCK SYMBOL: {symbol}")
-print("RUN AT: 11:52pm on June 5th, 2018") #use datetime module
+print("RUN AT: " + (str(current_time))) 
 print("-----------------")
 print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}") #fix
 print(f"LATEST DAILY CLOSING PRICE: {to_usd(float(latest_close))}") #fix
