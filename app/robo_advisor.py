@@ -25,16 +25,19 @@ latest_price_usd = "$100,000.00"
 # INFO OUTPUTS
 #
 
-import requests
 
-request_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apik"
-
-response = requests.get("request_url")
-print(type(response))
-print(response.status_code)
-print(response.text)
+request_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
 
 
+response = requests.get(request_url)
+#print(type(response))
+#print(response.status_code)
+#print(response.text)
+
+parsed_response = json.load(response.text)
+
+
+breakpoint()
 
 quit()
 
