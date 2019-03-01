@@ -63,14 +63,14 @@ print("-----------------")
 print("RECOMMENDATION: Buy!")
 print("RECOMMENDATION REASON: Because the latest closing price is within threshold XYZ etc., etc. and this fits within your risk tolerance etc., etc.")
 print("-----------------")
-print("WRITING CSV")
+print(f"WRITING DATA TO CSV: {csv_file_path}...")
 print("-----------------")
 print("HAPPY INVESTING")
 print("-----------------")
 
-csv_file_path = "prices.csv"
+#csv_file_path = "prices.csv"
 
-#csv_file_path = os.path.join(os.path.direname(__file__), "..", "data", "prices.csv")
+csv_file_path = os.path.join(os.path.direname(__file__), "..", "data", "prices.csv")
 
 with open(csv_file_path, "w") as csv_file:
     writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
