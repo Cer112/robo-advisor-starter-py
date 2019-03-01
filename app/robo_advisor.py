@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import json
 import csv
 import os
+import datetime
 
 import requests
 
@@ -49,7 +50,31 @@ for date in dates:
 latest_high = max(high_prices)
 latest_low = min(low_prices)
 
+#CF must continue
+#averagelows = no.mean(high_prices)
+#averagehighs = np.mean(low_prices)
+
+
+
+
 # TODO: further revise the example outputs below to reflect real information
+
+#csv_file_path = "prices.csv"
+csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
+
+csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
+
+
+with open(csv_file_path, "w") as csv_file:
+    writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
+    writer.writeheader()
+
+    #loop through to write each row
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
+
 
 print("-----------------")
 print(f"STOCK SYMBOL: {symbol}")
@@ -67,16 +92,4 @@ print(f"WRITING DATA TO CSV: {csv_file_path}...")
 print("-----------------")
 print("HAPPY INVESTING")
 print("-----------------")
-
-#csv_file_path = "prices.csv"
-
-csv_file_path = os.path.join(os.path.direname(__file__), "..", "data", "prices.csv")
-
-with open(csv_file_path, "w") as csv_file:
-    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
-    writer.writeheader()
-    writer.writerow({"city": "New York", "name": "Yankees"})
-    writer.writerow({"city": "New York", "name": "Mets"})
-    writer.writerow({"city": "Boston", "name": "Red Sox"})
-    writer.writerow({"city": "New Haven", "name": "Ravens"})
 
