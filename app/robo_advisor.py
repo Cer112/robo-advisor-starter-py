@@ -3,6 +3,7 @@ import json
 import csv
 import os
 import datetime
+from IPython import embed
 
 import requests
 
@@ -15,9 +16,13 @@ load_dotenv() # loads environment variables set in a ".env" file, including the 
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 #print("API KEY: " + api_key) # TODO: remove or comment-out this line after you have verified the environment variable is getting read properly
 
-user_input = ("Please type a stock symbol: ")
-symbol = user_input
+valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+while True:
+        user_input = input("Please print name of stock")
+        if all(char in valid_characters for char in user_input):
+            break
+        print("invalid stock choice, please enter another symbol")
 #
 # INFO OUTPUTS
 #
