@@ -70,10 +70,22 @@ with open(csv_file_path, "w") as csv_file:
     writer.writeheader()
 
     #loop through to write each row
-    writer.writerow({"city": "New York", "name": "Yankees"})
-    writer.writerow({"city": "New York", "name": "Mets"})
-    writer.writerow({"city": "Boston", "name": "Red Sox"})
-    writer.writerow({"city": "New Haven", "name": "Ravens"})
+    writer.writerow({
+        "timestamp": "TODO",
+        "open": "TODO",
+        "high": "TODO",
+        "low": "TODO",
+        "close": "TODO",
+        "volume": "TODO"
+    })
+      writer.writerow({
+        "timestamp": "TODO",
+        "open": "TODO",
+        "high": "TODO",
+        "low": "TODO",
+        "close": "TODO",
+        "volume": "TODO"
+    })
 
 
 print("-----------------")
