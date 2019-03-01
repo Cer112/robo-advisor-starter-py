@@ -45,8 +45,20 @@ latest_day = dates[0] #Assummes that latest day is first in list
 
 latest_close = TSD[latest_day]["4. close"] #price for the close
 
+#get highest closing price from each day and take the max of that
+
+high_prices = []
+low_prices = []
+
+for date in dates:
+    high_price = TSD[date]["2. high"]
+    low_price = TSD[date]["3. low"]
+    high_prices.append(float(high_price))
+    low_prices.append(float(low_price)
 
 
+recent_high = max(high_prices)
+recent_low = min(low_prices)
 
 # TODO: write response data to a CSV file
 
@@ -58,8 +70,8 @@ print("RUN AT: 11:52pm on June 5th, 2018") #use datetime module
 print("-----------------")
 print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}")
 print(f"LATEST DAILY CLOSING PRICE: {to_usd(float(latest_close))}")
-print("RECENT AVERAGE HIGH CLOSING PRICE: $101,000.00")
-print("RECENT AVERAGE LOW CLOSING PRICE: $99,000.00")
+print("RECENT AVERAGE HIGH CLOSING PRICE: {to_usd(float(recent_high))}")
+print("RECENT AVERAGE LOW CLOSING PRICE: {to_usd(float(recent_low))}")
 print("-----------------")
 print("RECOMMENDATION: Buy!")
 print("RECOMMENDATION REASON: Because the latest closing price is within threshold XYZ etc., etc. and this fits within your risk tolerance etc., etc.")
