@@ -19,7 +19,8 @@ symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stoc
 # TODO: further parse the JSON response...
 
 # TODO: traverse the nested response data structure to find the latest closing price and other values of interest...
-latest_price_usd = "$100,000.00"
+
+latest_price_usd = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"] #price for the close
 
 #
 # INFO OUTPUTS
@@ -30,17 +31,10 @@ request_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbo
 
 
 response = requests.get(request_url)
-#print(type(response))
-#print(response.status_code)
-#print(response.text)
 
-parsed_response = json.load(response.text)
+parsed_response = json.loads(response.text)
 
-
-breakpoint()
-
-quit()
-
+last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
 
 
@@ -53,9 +47,9 @@ quit()
 
 print("-----------------")
 print(f"STOCK SYMBOL: {symbol}")
-print("RUN AT: 11:52pm on June 5th, 2018")
+print("RUN AT: 11:52pm on June 5th, 2018") #use datetime module
 print("-----------------")
-print("LATEST DAY OF AVAILABLE DATA: June 4th, 2018")
+print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}")
 print(f"LATEST DAILY CLOSING PRICE: {latest_price_usd}")
 print("RECENT AVERAGE HIGH CLOSING PRICE: $101,000.00")
 print("RECENT AVERAGE LOW CLOSING PRICE: $99,000.00")
