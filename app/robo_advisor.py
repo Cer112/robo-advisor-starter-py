@@ -3,6 +3,9 @@ import json
 import os
 import requests
 
+def to_usd(my_price):
+    return"${0:,.2f}".format(my_price)
+
 load_dotenv() # loads environment variables set in a ".env" file, including the value of the ALPHAVANTAGE_API_KEY variable
 
 # see: https://www.alphavantage.co/support/#api-key
@@ -20,7 +23,7 @@ symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stoc
 
 # TODO: traverse the nested response data structure to find the latest closing price and other values of interest...
 
-latest_price_usd = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"] #price for the close
+
 
 #
 # INFO OUTPUTS
@@ -36,7 +39,7 @@ parsed_response = json.loads(response.text)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-
+latest_close = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"] #price for the close
 
 
 
@@ -50,7 +53,7 @@ print(f"STOCK SYMBOL: {symbol}")
 print("RUN AT: 11:52pm on June 5th, 2018") #use datetime module
 print("-----------------")
 print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}")
-print(f"LATEST DAILY CLOSING PRICE: {latest_price_usd}")
+print(f"LATEST DAILY CLOSING PRICE: {to_usd(float(latest_close))}")
 print("RECENT AVERAGE HIGH CLOSING PRICE: $101,000.00")
 print("RECENT AVERAGE LOW CLOSING PRICE: $99,000.00")
 print("-----------------")
