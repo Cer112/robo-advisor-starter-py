@@ -39,7 +39,11 @@ parsed_response = json.loads(response.text)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-latest_close = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"] #price for the close
+TSD = parsed_response["Time Series (Daily)"]
+dates = list(TSD.keys())
+latest_day = dates[0] #Assummes that latest day is first in list
+
+latest_close = TSD[latest_day]["4. close"] #price for the close
 
 
 
