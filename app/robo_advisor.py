@@ -18,16 +18,23 @@ api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 
 valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+#adapted from https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z
 while True:
         user_input = input("Please print name of stock")
-        if all(char in valid_characters for char in user_input):
-            break
-        print("invalid stock choice, please enter another symbol")
+        if not all(char in valid_characters for char in user_input) and len(user_input) < 6:
+                print("Please enter a valid stock name")
+        else:
+                data=requests.get('http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+user_input+'&apikey='+api_key)
+
+                if'Error' in data.text:
+                    print("OOPS, the stock name is not found. Please enter a valid stock name")
+                else:
+                    break 
+
 #
 # INFO OUTPUTS
 #
-
-
+symbol = user_input
 request_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
 
 response = requests.get(request_url)
@@ -36,7 +43,7 @@ parsed_response = json.loads(response.text)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-TSD = parsed_response["Time Series (Daily)"]
+TSD = parsed_response["Time Series (Daily)"] #abbreviation
 dates = list(TSD.keys())
 latest_day = dates[0] #Assummes that latest day is first in list
 
