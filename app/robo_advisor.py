@@ -97,10 +97,10 @@ print("-----------------")
 print(f"STOCK SYMBOL: {symbol}")
 print("RUN AT: " + (str(current_time))) 
 print("-----------------")
-print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}") #fix
-print(f"LATEST DAILY CLOSING PRICE: {to_usd(float(latest_close))}") #fix
-print("RECENT AVERAGE HIGH CLOSING PRICE: {to_usd(float(latest_high))}")
-print("RECENT AVERAGE LOW CLOSING PRICE: {to_usd(float(latest_low))}")
+print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}") 
+print(f"LATEST DAILY CLOSING PRICE: {to_usd(float(latest_close))}") 
+print(f"RECENT HIGH: {to_usd(float(latest_high))}")
+print(f"RECENT LOW: {to_usd(float(latest_low))}")
 
 
 #with help from https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py 
@@ -111,13 +111,6 @@ elif float(latest_close)> float(averagehighs):
     print("Recommendation: SELL! Because the stock's current closing price is higher than the average closing price")
 else:
     print("Recommendation: DO NOT BUY!: Because the latest closing price is not within your threshold risk and the current closing price is the average of previous closing prices.")
-
-
-
-
-
-
-
 
 print("-----------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}...")
