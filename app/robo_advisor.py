@@ -66,11 +66,6 @@ for date in dates:
 latest_high = max(high_prices)
 latest_low = min(low_prices)
 
-averagelows = np.mean(high_prices)
-averagehighs = np.mean(low_prices)
-#adapted from https://github.com/carolinefeeney/stocks-app-starter-py/blob/master/app/robo_adviser.py
-
-
 #csv_file_path = "prices.csv"
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 
@@ -103,14 +98,18 @@ print(f"RECENT HIGH: {to_usd(float(latest_high))}")
 print(f"RECENT LOW: {to_usd(float(latest_low))}")
 
 
+averagelows = np.mean(high_prices)
+averagehighs = np.mean(low_prices)
+
+
 #with help from https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py 
 #and https://github.com/carolinefeeney/stocks-app-starter-py/blob/master/app/robo_adviser.py
 if float(latest_close)< float(averagehighs):
-    print("Recommendation: BUY!: Because the latest closing price is within your threshold of your risk and the current closing price is below the average closing price.")
+    print("Recommendation: BUY!: Because the latest closing price is within your threshold of risk and the current closing price is below the average closing price.")
 elif float(latest_close)> float(averagehighs):
     print("Recommendation: SELL! Because the stock's current closing price is higher than the average closing price")
 else:
-    print("Recommendation: DO NOT BUY!: Because the latest closing price is not within your threshold risk and the current closing price is the average of previous closing prices.")
+    print("Recommendation: DO NOT BUY!: Because the latest closing price is not within your threshold of risk and the current closing price is below the average of previous closing prices.")
 
 print("-----------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}...")
