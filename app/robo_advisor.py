@@ -4,6 +4,7 @@ import csv
 import os
 import datetime
 from IPython import embed
+import numpy as np
 
 import requests
 
@@ -14,27 +15,30 @@ load_dotenv() # loads environment variables set in a ".env" file, including the 
 
 # see: https://www.alphavantage.co/support/#api-key
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
-#print("API KEY: " + api_key) # TODO: remove or comment-out this line after you have verified the environment variable is getting read properly
 
 valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+#adapted from https://github.com/hiepnguyen034/robo-stock
 #adapted from https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z
-while True:
-        user_input = input("Please print name of stock")
-        if not all(char in valid_characters for char in user_input) and len(user_input) < 6:
-                print("Please enter a valid stock name")
-        else:
-                data=requests.get('http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+user_input+'&apikey='+api_key)
 
-                if'Error' in data.text:
-                    print("OOPS, the stock name is not found. Please enter a valid stock name")
-                else:
-                    break 
+symbols = []
+while True:
+        symbol = input("Please print name of stock: ")
+        if not all(char in valid_characters for char in symbol):
+            print("Please enter a valid stock name")
+        else:
+            request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&apikey={api_key}"
+            response = requests.get(request_url)
+            if 'Error' in response.text:
+                print("OOPS, the stock name is not found. Please enter a valid stock name")
+                continue
+            else:
+                break 
 
 #
 # INFO OUTPUTS
 #
-symbol = user_input
+
 request_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
 
 response = requests.get(request_url)
@@ -46,7 +50,6 @@ last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 TSD = parsed_response["Time Series (Daily)"] #abbreviation
 dates = list(TSD.keys())
 latest_day = dates[0] #Assummes that latest day is first in list
-
 latest_close = TSD[latest_day]["4. close"] #price for the close
 
 #get highest closing price from each day and take the max of that
@@ -63,10 +66,9 @@ for date in dates:
 latest_high = max(high_prices)
 latest_low = min(low_prices)
 
-#CF must continue
-#averagelows = no.mean(high_prices)
-#averagehighs = np.mean(low_prices)
-
+averagelows = np.mean(high_prices)
+averagehighs = np.mean(low_prices)
+#adapted from https://github.com/carolinefeeney/stocks-app-starter-py/blob/master/app/robo_adviser.py
 
 
 #csv_file_path = "prices.csv"
@@ -99,9 +101,24 @@ print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}") #fix
 print(f"LATEST DAILY CLOSING PRICE: {to_usd(float(latest_close))}") #fix
 print("RECENT AVERAGE HIGH CLOSING PRICE: {to_usd(float(latest_high))}")
 print("RECENT AVERAGE LOW CLOSING PRICE: {to_usd(float(latest_low))}")
-print("-----------------")
-print("RECOMMENDATION: Buy!")
-print("RECOMMENDATION REASON: Because the latest closing price is within threshold XYZ etc., etc. and this fits within your risk tolerance etc., etc.")
+
+
+#with help from https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py 
+#and https://github.com/carolinefeeney/stocks-app-starter-py/blob/master/app/robo_adviser.py
+if float(latest_close)< float(averagehighs):
+    print("Recommendation: BUY!: Because the latest closing price is within your threshold of your risk and the current closing price is below the average closing price.")
+elif float(latest_close)> float(averagehighs):
+    print("Recommendation: SELL! Because the stock's current closing price is higher than the average closing price")
+else:
+    print("Recommendation: DO NOT BUY!: Because the latest closing price is not within your threshold risk and the current closing price is the average of previous closing prices.")
+
+
+
+
+
+
+
+
 print("-----------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}...")
 print("-----------------")
